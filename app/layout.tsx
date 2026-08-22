@@ -15,7 +15,7 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'CarterPCs — Making Tech Less Boring',
+  title: 'CarterPCs \u2014 Making Tech Less Boring',
   description:
     'CarterPCs (Carter Ryan Smith) — tech creator based in LA. PCs, phones, EVs, AI and everything worth talking about. 6.9M on TikTok, 3.2M on YouTube, 4x a day.',
 }
