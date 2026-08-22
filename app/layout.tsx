@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from 'next'
-import { Archivo, Space_Grotesk } from 'next/font/google'
+import { Bricolage_Grotesque, Space_Grotesk } from 'next/font/google'
 import './globals.css'
 
-const archivo = Archivo({
+const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
-  variable: '--font-archivo',
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-display',
+  weight: ['300', '400', '500', '600', '700', '800'],
 })
 
 const spaceGrotesk = Space_Grotesk({
@@ -30,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`bg-background ${archivo.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`bg-background ${bricolage.variable} ${spaceGrotesk.variable}`}>
       <body className="grain">{children}</body>
     </html>
   )

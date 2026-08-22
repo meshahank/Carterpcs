@@ -42,11 +42,36 @@ export default function About() {
         scrollTrigger: { trigger: line, start: 'top 90%', once: true },
       },
     )
+
+    // cursor tilt on the profile card
+    let onMove: ((e: MouseEvent) => void) | undefined
+    let onLeave: (() => void) | undefined
+    if (!prefersReducedMotion() && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      visual.style.transformStyle = 'preserve-3d'
+      const rotateX = gsap.quickTo(visual, 'rotateX', { duration: 0.5, ease: 'power3.out' })
+      const rotateY = gsap.quickTo(visual, 'rotateY', { duration: 0.5, ease: 'power3.out' })
+      onMove = (e: MouseEvent) => {
+        const rect = visual.getBoundingClientRect()
+        const px = (e.clientX - rect.left) / rect.width - 0.5
+        const py = (e.clientY - rect.top) / rect.height - 0.5
+        rotateX(py * -6)
+        rotateY(px * 6)
+      }
+      onLeave = () => {
+        rotateX(0)
+        rotateY(0)
+      }
+      visual.addEventListener('mousemove', onMove)
+      visual.addEventListener('mouseleave', onLeave)
+    }
+
     return () => {
       visualTween.scrollTrigger?.kill()
       visualTween.kill()
       lineTween.scrollTrigger?.kill()
       lineTween.kill()
+      if (onMove) visual.removeEventListener('mousemove', onMove)
+      if (onLeave) visual.removeEventListener('mouseleave', onLeave)
     }
   }, [])
 
@@ -55,7 +80,7 @@ export default function About() {
       <p className="tech-label mb-10 text-dim">02 / PROFILE</p>
 
       <div ref={headingRef}>
-        <h2 className="display-tight font-sans font-black uppercase">
+        <h2 className="display-tight font-sans font-extrabold uppercase">
           <span className="reveal-line text-[clamp(2.6rem,8.5vw,8.5rem)]">
             <span>The Human</span>
           </span>
@@ -74,9 +99,10 @@ export default function About() {
 
       <div className="mt-14 grid gap-14 md:mt-20 md:grid-cols-[0.9fr_1.1fr] md:gap-20">
         {/* visual */}
+        <div className="tilt-perspective">
         <div
           ref={visualRef}
-          className="relative flex aspect-[4/5] flex-col justify-between border border-line bg-surface p-7"
+          className="relative flex aspect-[4/5] flex-col justify-between border border-line bg-surface p-7 transition-shadow duration-500 hover:shadow-[0_0_60px_-15px_rgba(0,229,255,0.25)]"
         >
           <div className="flex justify-between">
             <span className="tech-label text-dim">EST. 2005</span>
@@ -86,7 +112,7 @@ export default function About() {
             </span>
           </div>
           <p
-            className="display-tight text-center font-sans text-[clamp(6rem,15vw,13rem)] font-black text-accent"
+            className="display-tight text-center font-sans text-[clamp(6rem,15vw,13rem)] font-extrabold text-accent"
             aria-hidden="true"
           >
             CR
@@ -98,6 +124,7 @@ export default function About() {
           {/* corner accents */}
           <span className="absolute left-0 top-0 h-4 w-4 border-l border-t border-accent/50" aria-hidden="true" />
           <span className="absolute bottom-0 right-0 h-4 w-4 border-b border-r border-accent/50" aria-hidden="true" />
+        </div>
         </div>
 
         {/* biography */}

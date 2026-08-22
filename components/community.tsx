@@ -1,7 +1,8 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
 import { ArrowRight } from 'lucide-react'
-import { useFadeReveal, useMagnetic, useTextReveal } from '@/lib/animations'
+import { attachTilt, useFadeReveal, useMagnetic, useTextReveal } from '@/lib/animations'
 
 const features = [
   'Build help & part picks',
@@ -15,6 +16,13 @@ export default function Community() {
   const headingRef = useTextReveal<HTMLDivElement>()
   const bodyRef = useFadeReveal<HTMLDivElement>()
   const ctaRef = useMagnetic<HTMLAnchorElement>(0.2)
+  const visualWrapRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const wrap = visualWrapRef.current
+    if (!wrap) return
+    return attachTilt(wrap, '[data-tilt]', 5)
+  }, [])
 
   return (
     <section
@@ -35,13 +43,17 @@ export default function Community() {
 
       <div className="relative grid gap-14 lg:grid-cols-2 lg:gap-20">
         {/* type-driven visual */}
-        <div className="flex flex-col justify-between border border-line bg-surface/60 p-8 md:p-10">
+        <div ref={visualWrapRef} className="tilt-perspective">
+        <div
+          data-tilt
+          className="flex flex-col justify-between border border-line bg-surface/60 p-8 transition-shadow duration-500 hover:shadow-[0_0_60px_-15px_rgba(0,229,255,0.2)] md:p-10"
+        >
           <div className="flex justify-between">
             <span className="tech-label text-dim">CARTER&apos;S CACTI</span>
             <span className="tech-label text-accent">DISCORD</span>
           </div>
           <p
-            className="display-tight my-10 font-sans text-[clamp(4rem,10vw,9rem)] font-black uppercase leading-[0.85]"
+            className="display-tight my-10 font-sans text-[clamp(4rem,10vw,9rem)] font-extrabold uppercase leading-[0.85]"
             aria-hidden="true"
           >
             <span className="block text-foreground/15">Talk</span>
@@ -49,23 +61,24 @@ export default function Community() {
             <span className="text-outline block">24/7</span>
           </p>
           <div className="space-y-3">
-            <div className="border border-line bg-background px-4 py-3">
+            <div className="border border-line bg-background px-4 py-3 transition-colors duration-300 hover:border-accent/40">
               <p className="tech-label text-accent">CACTI_MEMBER</p>
               <p className="mt-1 text-sm text-muted">
                 just built my first PC thanks to Carter
               </p>
             </div>
-            <div className="ml-8 border border-line bg-background px-4 py-3">
+            <div className="ml-8 border border-line bg-background px-4 py-3 transition-colors duration-300 hover:border-violet/40">
               <p className="tech-label text-violet">MOD_TEAM</p>
               <p className="mt-1 text-sm text-muted">welcome to the gang</p>
             </div>
           </div>
         </div>
+        </div>
 
         {/* copy */}
         <div className="flex flex-col justify-center">
           <div ref={headingRef}>
-            <h2 className="display-tight font-sans font-black uppercase">
+            <h2 className="display-tight font-sans font-extrabold uppercase">
               <span className="reveal-line text-[clamp(2.6rem,7vw,7rem)]">
                 <span>Join The</span>
               </span>
@@ -101,7 +114,7 @@ export default function Community() {
               href="https://linktree.com/carterpcs"
               target="_blank"
               rel="noopener noreferrer"
-              className="tech-label fade-item mt-10 inline-flex items-center gap-3 bg-accent px-7 py-4 font-medium text-background transition-colors duration-300 hover:bg-foreground"
+              className="press tech-label fade-item mt-10 inline-flex items-center gap-3 bg-accent px-7 py-4 font-medium text-background transition-colors duration-300 hover:bg-foreground"
               data-cursor="OPEN"
             >
               JOIN THE DISCORD

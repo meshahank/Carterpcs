@@ -2,13 +2,21 @@
 
 import { useEffect, useRef } from 'react'
 import { Play } from 'lucide-react'
-import { gsap, ScrollTrigger, prefersReducedMotion, useTextReveal } from '@/lib/animations'
+import { attachTilt, gsap, ScrollTrigger, prefersReducedMotion, useTextReveal } from '@/lib/animations'
 import { videos } from '@/lib/data'
 
 export default function ContentArchive() {
   const headingRef = useTextReveal<HTMLDivElement>()
   const pinRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
+
+  // Cursor tilt on cards (independent of scroll behavior, works at any width)
+  useEffect(() => {
+    const track = trackRef.current
+    if (!track) return
+    const detach = attachTilt(track, '[data-tilt]', 6)
+    return detach
+  }, [])
 
   // Horizontal scroll driven by vertical scroll (desktop only)
   useEffect(() => {
@@ -50,7 +58,7 @@ export default function ContentArchive() {
       <div className="px-6 pt-28 md:px-12 md:pt-40">
         <p className="tech-label mb-10 text-dim">05 / ARCHIVE</p>
         <div ref={headingRef} className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
-          <h2 className="display-tight font-sans font-black uppercase">
+          <h2 className="display-tight font-sans font-extrabold uppercase">
             <span className="reveal-line text-[clamp(2.6rem,8.5vw,8.5rem)]">
               <span>Recently</span>
             </span>
@@ -70,7 +78,7 @@ export default function ContentArchive() {
       <div ref={pinRef} className="relative overflow-hidden py-16 md:py-24 lg:flex lg:min-h-svh lg:items-center">
         <div
           ref={trackRef}
-          className="flex gap-5 overflow-x-auto px-6 pb-4 md:px-12 lg:w-max lg:overflow-visible lg:pb-0"
+          className="tilt-perspective flex gap-5 overflow-x-auto px-6 pb-4 md:px-12 lg:w-max lg:overflow-visible lg:pb-0"
           style={{ scrollbarWidth: 'none' }}
         >
           {videos.map((video) => (
@@ -79,7 +87,8 @@ export default function ContentArchive() {
               href={video.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative flex w-[80vw] shrink-0 flex-col border border-line bg-background transition-colors duration-500 hover:border-line-strong sm:w-[420px] lg:w-[480px]"
+              data-tilt
+              className="press group relative flex w-[80vw] shrink-0 flex-col border border-line bg-background transition-colors duration-500 hover:border-line-strong sm:w-[420px] lg:w-[480px]"
               data-cursor="PLAY"
             >
               {/* thumbnail area */}
@@ -92,7 +101,7 @@ export default function ContentArchive() {
                   }}
                   aria-hidden="true"
                 />
-                <span className="display-tight absolute bottom-4 left-5 font-sans text-7xl font-black text-foreground/10 transition-colors duration-500 group-hover:text-accent/25">
+                <span className="display-tight absolute bottom-4 left-5 font-sans text-7xl font-extrabold text-foreground/10 transition-colors duration-500 group-hover:text-accent/25">
                   {video.index}
                 </span>
                 <span className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-line-strong bg-background/60 backdrop-blur-sm transition-colors duration-500 group-hover:border-accent group-hover:text-accent">
@@ -123,11 +132,11 @@ export default function ContentArchive() {
             href="https://youtube.com/@actuallycarterpcs"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex w-[70vw] shrink-0 flex-col items-start justify-end border border-accent/30 bg-background p-6 transition-colors duration-500 hover:bg-accent hover:text-background sm:w-[340px]"
+            className="press group flex w-[70vw] shrink-0 flex-col items-start justify-end border border-accent/30 bg-background p-6 transition-colors duration-500 hover:bg-accent hover:text-background sm:w-[340px]"
             data-cursor="VIEW"
           >
             <span className="tech-label text-accent group-hover:text-background">FULL ARCHIVE</span>
-            <span className="display-tight mt-4 font-sans text-4xl font-black uppercase md:text-5xl">
+            <span className="display-tight mt-4 font-sans text-4xl font-extrabold uppercase md:text-5xl">
               See every drop →
             </span>
           </a>

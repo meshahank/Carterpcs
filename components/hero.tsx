@@ -99,7 +99,7 @@ export default function Hero() {
           01 / CARTERPCS — TECH CREATOR, LOS ANGELES
         </p>
 
-        <h1 className="display-tight font-sans font-black uppercase">
+        <h1 className="display-tight font-sans font-extrabold uppercase">
           <span className="reveal-line text-[clamp(3.4rem,12vw,12.5rem)]">
             <span>Making Tech</span>
           </span>

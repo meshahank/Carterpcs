@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { gsap, prefersReducedMotion } from '@/lib/animations'
+import { gsap, prefersReducedMotion, useMagnetic } from '@/lib/animations'
 import { scrollToTarget } from '@/components/smooth-scroll'
 import { READY_EVENT } from '@/components/preloader'
 
@@ -17,6 +17,8 @@ export default function Navigation() {
   const progressRef = useRef<HTMLDivElement>(null)
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const logoRef = useMagnetic<HTMLButtonElement>(0.35)
+  const ctaRef = useMagnetic<HTMLButtonElement>(0.2)
 
   // entrance after preloader
   useEffect(() => {
@@ -71,8 +73,9 @@ export default function Navigation() {
           }`}
         >
           <button
+            ref={logoRef}
             onClick={() => goTo('#hero')}
-            className={`font-sans font-bold tracking-tight transition-all duration-500 ${
+            className={`press font-sans font-bold tracking-tight ${
               scrolled ? 'text-base' : 'text-lg'
             }`}
             data-cursor=""
@@ -85,7 +88,7 @@ export default function Navigation() {
               <button
                 key={link.href}
                 onClick={() => goTo(link.href)}
-                className="link-sweep tech-label text-muted transition-colors hover:text-foreground"
+                className="link-sweep tech-label press text-muted transition-colors hover:text-foreground hover:-translate-y-0.5"
               >
                 {link.label}
               </button>
@@ -94,15 +97,16 @@ export default function Navigation() {
 
           <div className="flex items-center gap-4">
             <button
+              ref={ctaRef}
               onClick={() => goTo('#content')}
-              className="tech-label hidden border border-accent/40 px-4 py-2.5 text-accent transition-colors hover:bg-accent hover:text-background md:block"
+              className="press tech-label hidden border border-accent/40 px-4 py-2.5 text-accent transition-colors hover:bg-accent hover:text-background md:block"
               data-cursor="VIEW"
             >
               Watch Latest
             </button>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="tech-label text-foreground md:hidden"
+              className="press tech-label text-foreground md:hidden"
               aria-expanded={menuOpen}
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             >
@@ -124,7 +128,7 @@ export default function Navigation() {
             <button
               key={link.href}
               onClick={() => goTo(link.href)}
-              className="display-tight border-b border-line py-5 text-left font-sans text-5xl font-bold text-foreground"
+              className="press display-tight border-b border-line py-5 text-left font-sans text-5xl font-bold text-foreground transition-colors hover:text-accent"
             >
               <span className="tech-label mr-4 align-middle text-accent">0{i + 1}</span>
               {link.label}
@@ -132,7 +136,7 @@ export default function Navigation() {
           ))}
           <button
             onClick={() => goTo('#content')}
-            className="tech-label mt-10 w-fit border border-accent/40 px-5 py-3 text-accent"
+            className="press tech-label mt-10 w-fit border border-accent/40 px-5 py-3 text-accent transition-colors hover:bg-accent hover:text-background"
           >
             WATCH LATEST →
           </button>

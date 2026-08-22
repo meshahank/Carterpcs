@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { ArrowUpRight } from 'lucide-react'
-import { gsap, prefersReducedMotion, useFadeReveal } from '@/lib/animations'
+import { gsap, prefersReducedMotion, useFadeReveal, useMagnetic } from '@/lib/animations'
 import { links } from '@/lib/data'
 import { scrollToTarget } from '@/components/smooth-scroll'
 
@@ -16,6 +16,8 @@ const socials = [
 export default function SiteFooter() {
   const gridRef = useFadeReveal<HTMLDivElement>()
   const wordmarkRef = useRef<HTMLParagraphElement>(null)
+  const emailRef = useMagnetic<HTMLAnchorElement>(0.15)
+  const topRef = useMagnetic<HTMLButtonElement>(0.3)
 
   useEffect(() => {
     const wordmark = wordmarkRef.current
@@ -44,7 +46,7 @@ export default function SiteFooter() {
 
       <p
         ref={wordmarkRef}
-        className="display-tight mt-8 select-none whitespace-nowrap font-sans text-[clamp(4rem,15.5vw,19rem)] font-black tracking-tighter text-foreground"
+        className="display-tight mt-8 select-none whitespace-nowrap font-sans text-[clamp(4rem,15.5vw,19rem)] font-extrabold tracking-tighter text-foreground"
         aria-hidden="true"
       >
         Carter<span className="text-accent">PCs</span>
@@ -54,8 +56,9 @@ export default function SiteFooter() {
         <div className="fade-item">
           <h3 className="tech-label text-dim">CONTACT</h3>
           <a
+            ref={emailRef}
             href={links.email}
-            className="link-sweep mt-4 inline-block text-sm text-foreground"
+            className="link-sweep press mt-4 inline-block text-sm text-foreground"
             data-cursor="OPEN"
           >
             carterpcs@rakugomedia.com
@@ -74,7 +77,7 @@ export default function SiteFooter() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-foreground"
+                  className="press group inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-foreground"
                   data-cursor="VIEW"
                 >
                   {social.label}
@@ -119,8 +122,9 @@ export default function SiteFooter() {
       <div className="flex items-center justify-between border-t border-line py-6">
         <p className="tech-label text-dim">© 2026 CARTERPCS</p>
         <button
+          ref={topRef}
           onClick={() => scrollToTarget(0)}
-          className="tech-label text-muted transition-colors hover:text-accent"
+          className="press tech-label text-muted transition-colors hover:text-accent"
           data-cursor=""
         >
           BACK TO TOP ↑

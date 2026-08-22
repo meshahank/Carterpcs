@@ -71,7 +71,7 @@ export default function Featured() {
             }}
           >
             <span
-              className="display-tight pointer-events-none absolute -right-4 top-6 select-none font-sans text-[clamp(5rem,16vw,15rem)] font-black text-foreground/[0.04]"
+              className="display-tight pointer-events-none absolute -right-4 top-6 select-none font-sans text-[clamp(5rem,16vw,15rem)] font-extrabold text-foreground/[0.04]"
               aria-hidden="true"
             >
               PLAY
@@ -79,7 +79,7 @@ export default function Featured() {
 
             <div ref={headingRef} className="relative">
               <span className="tech-label text-accent">LATEST DROP</span>
-              <h2 className="display-tight mt-5 max-w-4xl font-sans font-black uppercase">
+              <h2 className="display-tight mt-5 max-w-4xl font-sans font-extrabold uppercase">
                 <span className="reveal-line text-[clamp(2.2rem,6.5vw,6rem)]">
                   <span>Tech Doesn&apos;t Have</span>
                 </span>
@@ -95,7 +95,7 @@ export default function Featured() {
                 href={links.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="tech-label mt-10 inline-flex items-center gap-3 border border-accent/50 px-6 py-4 text-accent transition-colors duration-300 hover:bg-accent hover:text-background"
+                className="press tech-label mt-10 inline-flex items-center gap-3 border border-accent/50 px-6 py-4 text-accent transition-colors duration-300 hover:bg-accent hover:text-background hover:gap-4"
                 data-cursor="PLAY"
               >
                 WATCH VIDEO

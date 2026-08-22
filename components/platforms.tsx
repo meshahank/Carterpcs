@@ -14,7 +14,7 @@ export default function Platforms() {
       <p className="tech-label mb-10 text-dim">04 / INDEX</p>
 
       <div ref={headingRef}>
-        <h2 className="display-tight font-sans font-black uppercase">
+        <h2 className="display-tight font-sans font-extrabold uppercase">
           <span className="reveal-line text-[clamp(2.6rem,8.5vw,8.5rem)]">
             <span>Find Me</span>
           </span>
@@ -54,7 +54,7 @@ export default function Platforms() {
           )
 
           const className =
-            'row-sweep group flex w-full items-center gap-5 border-b border-line py-7 text-left transition-colors duration-500 hover:bg-surface md:gap-10 md:py-9'
+            'row-sweep press group flex w-full items-center gap-5 border-b border-line py-7 text-left transition-colors duration-500 hover:bg-surface md:gap-10 md:py-9'
 
           if (platform.href.startsWith('#')) {
             return (

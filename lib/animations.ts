@@ -156,4 +156,49 @@ export function useMagnetic<T extends HTMLElement>(strength = 0.25) {
   return ref
 }
 
+/**
+ * Attaches a subtle 3D cursor-tilt to every element matching `selector`
+ * inside `container`. Returns a cleanup function. No-op on touch devices
+ * or when the user prefers reduced motion.
+ */
+export function attachTilt(container: HTMLElement, selector = '[data-tilt]', max = 8) {
+  if (prefersReducedMotion()) return () => {}
+  if (typeof window === 'undefined') return () => {}
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return () => {}
+
+  const cards = Array.from(container.querySelectorAll<HTMLElement>(selector))
+  const cleanups: Array<() => void> = []
+
+  cards.forEach((card) => {
+    card.style.transformStyle = 'preserve-3d'
+    const rotateX = gsap.quickTo(card, 'rotateX', { duration: 0.5, ease: 'power3.out' })
+    const rotateY = gsap.quickTo(card, 'rotateY', { duration: 0.5, ease: 'power3.out' })
+    const scale = gsap.quickTo(card, 'scale', { duration: 0.5, ease: 'power3.out' })
+
+    const onMove = (e: MouseEvent) => {
+      const rect = card.getBoundingClientRect()
+      const px = (e.clientX - rect.left) / rect.width - 0.5
+      const py = (e.clientY - rect.top) / rect.height - 0.5
+      rotateX(py * -max)
+      rotateY(px * max)
+      scale(1.02)
+    }
+    const onLeave = () => {
+      rotateX(0)
+      rotateY(0)
+      scale(1)
+    }
+
+    card.addEventListener('mousemove', onMove)
+    card.addEventListener('mouseleave', onLeave)
+    cleanups.push(() => {
+      card.removeEventListener('mousemove', onMove)
+      card.removeEventListener('mouseleave', onLeave)
+      gsap.killTweensOf(card)
+    })
+  })
+
+  return () => cleanups.forEach((fn) => fn())
+}
+
 export { gsap, ScrollTrigger }

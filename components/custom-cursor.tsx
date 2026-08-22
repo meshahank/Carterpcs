@@ -60,12 +60,23 @@ export default function CustomCursor() {
       }
     }
 
+    const onDown = () => {
+      gsap.to(ring, { scale: ring.dataset.active ? 2.0 : 0.8, duration: 0.2, ease: 'power3.out' })
+    }
+    const onUp = () => {
+      gsap.to(ring, { scale: ring.dataset.active ? 2.4 : 1, duration: 0.3, ease: 'back.out(2)' })
+    }
+
     document.addEventListener('mousemove', onMove, { passive: true })
     document.addEventListener('mouseover', onOver, { passive: true })
+    document.addEventListener('mousedown', onDown, { passive: true })
+    document.addEventListener('mouseup', onUp, { passive: true })
 
     return () => {
       document.removeEventListener('mousemove', onMove)
       document.removeEventListener('mouseover', onOver)
+      document.removeEventListener('mousedown', onDown)
+      document.removeEventListener('mouseup', onUp)
       delete document.body.dataset.customCursor
       gsap.killTweensOf([dot, ring, label])
     }

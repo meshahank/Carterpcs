@@ -72,7 +72,7 @@ export default function Stats() {
       <p className="tech-label mb-10 text-dim">03 / REACH</p>
 
       <div ref={headingRef}>
-        <h2 className="display-tight font-sans font-black uppercase">
+        <h2 className="display-tight font-sans font-extrabold uppercase">
           <span className="reveal-line text-[clamp(2.6rem,8.5vw,8.5rem)]">
             <span>Numbers That</span>
           </span>
@@ -89,17 +89,21 @@ export default function Stats() {
           {stats.map((stat, i) => (
             <div
               key={stat.label}
-              className={`stat-row border-t border-line py-10 md:border-t-0 md:px-8 md:py-4 ${
+              className={`stat-row group cursor-default border-t border-line py-10 transition-all duration-500 hover:bg-background/40 md:border-t-0 md:px-8 md:py-4 ${
                 i > 0 ? 'md:border-l' : 'md:pl-0'
               }`}
             >
-              <p className="display-tight font-sans text-[clamp(4rem,7vw,7rem)] font-black tabular-nums text-foreground">
+              <p className="display-tight font-sans text-[clamp(4rem,7vw,7rem)] font-extrabold tabular-nums text-foreground transition-transform duration-500 group-hover:-translate-y-1.5">
                 <span data-count={stat.value} data-decimals={stat.decimals}>
                   0
                 </span>
-                <span className="text-accent">{stat.suffix}</span>
+                <span className="text-accent transition-colors duration-500 group-hover:text-violet">
+                  {stat.suffix}
+                </span>
               </p>
-              <p className="tech-label mt-4 text-muted">{stat.label}</p>
+              <p className="tech-label mt-4 text-muted transition-colors duration-500 group-hover:text-foreground">
+                {stat.label}
+              </p>
               <p className="tech-label mt-1 text-dim">{stat.platform}</p>
             </div>
           ))}
